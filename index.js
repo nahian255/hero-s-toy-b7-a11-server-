@@ -27,6 +27,25 @@ async function run() {
         const db = client.db("toySection");
         const toyCollection = db.collection("toys");
 
+        const indexKeys = { name: 1, price: 1 };
+        const indexOptions = { name: "priceingSearch" };
+        const result = await toyCollection.createIndex(indexKeys, indexOptions);
+        console.log(result);
+
+        app.get("/getToysBySearch/:price", async (req, res) => {
+            const text = req.params.price;
+            console.log(text);
+            const result = await toyCollection
+                .find({
+                    $or: [
+                        { name: { $regex: text, $options: "i" } },
+                        { price: { $regex: text, $options: "i" } }
+                    ],
+                })
+                .toArray();
+            res.send(result);
+        });
+
         // post toy function....
         app.post('/addtoy', async (req, res) => {
             const body = req.body
