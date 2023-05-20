@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors')
+const port = process.env.port || 3000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
@@ -8,7 +9,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 app.use(cors())
 app.use(express.json())
 
-// console.log(process.env.DB_H);
+console.log(process.env.DB_H);
 
 const uri = `mongodb+srv://toydb:LH8ct1ZUDFjoCCMC@cluster0.lyu30gb.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -124,6 +125,6 @@ app.get('/', (req, res) => {
 
 
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log(`it's done`);
 })
