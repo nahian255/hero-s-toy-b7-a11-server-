@@ -8,7 +8,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 app.use(cors())
 app.use(express.json())
 
-console.log(process.env.DB_H);
+// console.log(process.env.DB_H);
 
 const uri = `mongodb+srv://toydb:LH8ct1ZUDFjoCCMC@cluster0.lyu30gb.mongodb.net/?retryWrites=true&w=majority`;
 
