@@ -50,24 +50,11 @@ async function run() {
             res.send(result);
         });
 
-        // post toy function....
-        app.post('/addtoy', async (req, res) => {
-            const body = req.body
-            const result = await toyCollection.insertOne(body)
-            console.log(result);
-            if (result?.insertedId) {
-                return res.send(result);
-            } else {
-                return res.status(404).send({
-                    message: "can not insert try again leter",
-                    status: false,
-                });
-            }
-        });
+
 
 
         app.get('/alltoys', async (req, res) => {
-            const result = await toyCollection.find({}).toArray()
+            const result = await toyCollection.find({}).toArray().slice(0, 20)
             res.send(result)
         })
 
@@ -86,6 +73,25 @@ async function run() {
             const result = await toyCollection.find(query).toArray()
             res.send(result)
         })
+
+        app.get('/', (req, res) => {
+            res.send('hello and hi everyone')
+        })
+
+        // post toy function....
+        app.post('/addtoy', async (req, res) => {
+            const body = req.body
+            const result = await toyCollection.insertOne(body)
+            console.log(result);
+            if (result?.insertedId) {
+                return res.send(result);
+            } else {
+                return res.status(404).send({
+                    message: "can not insert try again leter",
+                    status: false,
+                });
+            }
+        });
 
         app.put('/mytoys/:id', async (req, res) => {
             const id = req.params.id;
@@ -119,9 +125,7 @@ async function run() {
 }
 run().catch(console.dir);
 
-app.get('/', (req, res) => {
-    res.send('hello')
-})
+
 
 
 
